@@ -22,9 +22,7 @@ public class TimeUtil {
 
   public String getDiffBetweenCreationDate(LocalDate creationDate) {
     LocalDate currentDate = timeProvider.getCurrentDate();
-
     Period periodBetween = Period.between(creationDate, currentDate);
-
 
     if (periodBetween.isNegative()) {
       throw new IllegalArgumentException("Creation date is in the future");
@@ -33,19 +31,13 @@ public class TimeUtil {
     if (periodBetween.getYears() > 0) {
       return "more than a year";
     } else if (periodBetween.getMonths() > 0) {
-      if (periodBetween.getMonths() == 1) {
-        return "one month ago";
-      }
-
-      return periodBetween.getMonths() + " months ago";
+      return formatTimeAgo(periodBetween.getMonths(), "month");
     } else if (periodBetween.getDays() > 0) {
-      if (periodBetween.getDays() == 1) {
-        return "one day ago";
-      }
-      return periodBetween.getDays() + " days ago";
-    } else  {
+      return formatTimeAgo(periodBetween.getDays(), "day");
+    } else {
       return "today";
     }
+
   }
 
   private String formatTimeAgo(int time, String unit) {
